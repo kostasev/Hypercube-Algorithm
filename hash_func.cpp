@@ -50,8 +50,10 @@ value_point<int> hash_func::hash_value(data_point<int>& k,int &f,int size,int ta
             }
             h=h+this->t[j];
             h=h/(double)const_lsh::w;
-            point.point.push_back(int(h));
-            sum+=int(h)*r[j];
+            int h1=(int)h;
+            h1=((h1%2)+2)%2;
+            point.point.push_back(h1);
+            sum+= (int) pow(2.0,double(size-1-j))*h1;
             h=0.0;
         }
         f=int((((sum%INT_MAX-5)%table_size)+table_size)%table_size);
@@ -64,11 +66,15 @@ value_point<int> hash_func::hash_value(data_point<int>& k,int &f,int size,int ta
             for (int i=0; i<k.point.size(); i++){
                 h+=this->v[j][i]*k.point[i];
             }
-            if (h>=0)
+            int coin=0;
+            if (h>=0){
+                coin=1;
                 point.point.push_back(1);
-            else
+            }
+            else{
                 point.point.push_back(0);
-            sum+= (int) pow(2.0,double(size-1-j));
+            }
+            sum+= (int) pow(2.0,double(size-1-j))*coin;
             h=0.0;
         }
         f=sum;

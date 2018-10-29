@@ -123,25 +123,14 @@ int main(int argc, char** argv) {
         }
     }
 
+    int D = (int) log2(num_lines);
+    int table_sz = (int) pow(2.0,D);
+    Hash_table table = Hash_table(table_sz, d, D, func_name);
 
-    vector <Hash_table> tables ;
-    int table_sz=0;
-    if (func_name=="euclidean"){
-        table_sz=num_lines/const_lsh::table_size;
+    for (int i = 0; i < num_lines; i++) {
+        table.add_item(data_set[i],table_sz,r);
     }
-    else{
-        table_sz = (int) pow(2.0,k);
-    }
-    for (int i=0; i<L ; i++){
-        tables.push_back(Hash_table(table_sz, d, k, func_name));
-    }
-
-    for (int j=0;j<tables.size();j++) {
-        for (int i = 0; i < num_lines; i++) {
-            tables[j].add_item(data_set[i],table_sz,r);
-        }
-    }
-
+/*
     map<string, value_point<int>> bucks;
     int num_lines_q = 0, dq = 0;
     get_data_lenghts(query, num_lines_q, dq);
@@ -177,7 +166,7 @@ int main(int argc, char** argv) {
     }
     for (int i=0;i<num_lines;i++){
         data_set[i].point.clear();
-    }
+    }*/
     return 0;
 
 }
