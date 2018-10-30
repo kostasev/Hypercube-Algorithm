@@ -33,12 +33,27 @@ Key Hash_table::query_item(data_point<int>& k,int tb_size,std::vector<int> r){
     return f;
 }
 
-void Hash_table::get_bucket(data_point<int>& z,Key k, std::map<std::string,value_point<int>>& mp,std::vector<int> r){
+std::vector<int> get_hams(int num,int probes,int max){
+    int h=1;
+    std::vector<int> hams;
+    for (int i=0;i<probes;i++){
+        hams.push_back(h^num);
+        h=h<<1;
+        if (h>max) break;
+    }
+    return hams;
+}
+
+void Hash_table::get_bucket(data_point<int>& z,Key k, std::map<std::string,value_point<int>>& mp,std::vector<int> r,int probes ,int max_num){
     Key f;
-    auto range=this->hash_tb.equal_range(k);
-    value_point<int> point = this->hfunc->hash_value(z,f.hash_val,this->k,2500,r);
-    for(auto it = range.first; it != range.second ; it++ ){
-        if (vectors_eq(it->second.point , point.point)){
+    std::vector<int> hams = get_hams(k.hash_val,probes,max_num);
+    hams.push_back(k.hash_val);
+    Key temp;
+    for (int i=0;i<hams.size();i++){
+        temp.hash_val = hams[i];
+        auto range=this->hash_tb.equal_range(temp);
+        value_point<int> point = this->hfunc->hash_value(z,f.hash_val,this->k,max_num,r);
+        for(auto it = range.first; it != range.second ; it++ ){
             mp.insert({it->second.p->name,it->second});
         }
     }
@@ -52,3 +67,5 @@ void Hash_table::print_stats(){
         std::cout << "bucket #" << i << " has " << hash_tb.bucket_size(i) << " elements.\n";
     }
 }
+
+
