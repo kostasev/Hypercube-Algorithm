@@ -142,7 +142,6 @@ int main(int argc, char** argv) {
         cout << "\nQuery Item: " << query_set[k].name <<endl;
         query_key=table.query_item(query_set[k],table_sz,r);
         table.get_bucket(query_set[k],query_key, bucks,r,8,table_sz);
-        cout << "==========> SZ : " <<  bucks.size() <<endl;
 
         //range_nn(bucks,query_set[k],R,func_name);
         t_nn=true_nn(query_set[k], data_set, num_lines,func_name);
