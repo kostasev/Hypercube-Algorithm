@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < num_lines; i++) {
         table.add_item(data_set[i],table_sz,r);
     }
-/*
+
     map<string, value_point<int>> bucks;
     int num_lines_q = 0, dq = 0;
     get_data_lenghts(query, num_lines_q, dq);
@@ -140,10 +140,9 @@ int main(int argc, char** argv) {
     Key query_key;
     for (int k = 0; k < num_lines_q; k++) {
         cout << "\nQuery Item: " << query_set[k].name <<endl;
-        for (int i=0;i<tables.size();i++){
-            query_key=tables[i].query_item(query_set[k],table_sz,r);
-            tables[i].get_bucket(query_set[k],query_key, bucks,r);
-        }
+        query_key=table.query_item(query_set[k],table_sz,r);
+        table.get_bucket(query_set[k],query_key, bucks,r);
+
         //range_nn(bucks,query_set[k],R,func_name);
         t_nn=true_nn(query_set[k], data_set, num_lines,func_name);
         l_nn=a_nn(bucks,query_set[k],time,func_name);
@@ -158,7 +157,6 @@ int main(int argc, char** argv) {
 
 
     r.clear();
-    tables.clear();
     bucks.clear();
 
     for (int i=0;i<num_lines_q;i++){
@@ -166,7 +164,7 @@ int main(int argc, char** argv) {
     }
     for (int i=0;i<num_lines;i++){
         data_set[i].point.clear();
-    }*/
+    }
     return 0;
 
 }

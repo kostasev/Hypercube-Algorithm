@@ -56,7 +56,7 @@ value_point<int> hash_func::hash_value(data_point<int>& k,int &f,int size,int ta
             sum+= (int) pow(2.0,double(size-1-j))*h1;
             h=0.0;
         }
-        f=int((((sum%INT_MAX-5)%table_size)+table_size)%table_size);
+        f=int(sum);
         point.p=&k;
         return point;
     }else {
